@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Time Table Manager | Welcome</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div id="branding">
+          <h1><span class="highlight">St. Thomas' College of Engineering &amp; Technology</span></h1>
+        </div>
+        <nav>
+          <ul>
+            <li><form th:action="@{/logout}" method="post"><input type="submit" value="Log Out"/></form></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <section id="showcase">
+      <div class="container">
+        <h1>Welcome, Admin!</h1>
+        <p>Select the tables to modify the subject and teacher databases</p>
+      </div>
+    </section>
+    <div class="tab">
+    	<button class="tablinks" onclick="openPanel(event,'t1')" id="default">Properties</button>
+  		<button class="tablinks" onclick="openPanel(event,'t3')">Teachers</button>
+  		<button class="tablinks" onclick="openPanel(event,'t2')">Subjects</button>
+    </div>
+    <div id="t1" class="tabcontent">
+  		<form method = "POST" action = "/addProperties">
+  			<div class="sem">
+  				<h5>Select semester:</h5>
+  				<input type="radio" value="odd">Odd
+  				<input type="radio" value="even">Even
+  			</div>
+    		<h5>Slots per day:</h5>
+    		<input type="text"><br>
+    		<div class="week">
+    			<h4>Select active days:</h4>
+    			Monday<input type="checkbox">
+   				Tuesday<input type="checkbox">
+   				Wednesday<input type="checkbox">
+   				Thursday<input type="checkbox">
+   				Friday<input type="checkbox">
+    			Saturday<input type="checkbox">
+    			Sunday<input type="checkbox">
+    		</div><br><br>
+    		<button type="submit" value="Submit">Confirm</button>
+  		</form>
+	</div>
+	<div ng-app="SubjectManagement" ng-controller="SubjectController">
+	<div id="t2" class="tabcontent">
+  		<h3>
+         Enter Subject Details Below
+      	</h3>
+      	<div id="subjectEntry">
+      		<form>
+         		<table border="0">
+            		<tr>
+               			<th>Subject Id</th>
+               			<th>Total hours per week</th>
+               			<th>Duration</th>
+               			<th>Practical class?</th>
+               			<th>Department</th>
+               			<th>Name of Lab</th>
+               			<th>Number of teachers</th>
+                    	<th>Select Teachers</th>
+                    	<th>Teachers list</th>
+                    	<th>Clear Teachers List</th>
+               			<th>Clear all</th>
+            		</tr>
+            		<tr>
+               			<td><input type="text" name="id" ng-model="subjectForm.id" required/></td>
+               			<td><input type="text" name="hours" ng-model="subjectForm.hours"  /></td>
+               			<td><input type="text" name="duration" ng-model="subjectForm.length" /></td>
+               			<td>
+               				<select name="practical" ng-model="subjectForm.practical">
+               					<option value="true">true</option>
+               					<option value="false">false</option>
+               				</select>
+               			</td>
+               			<td>
+               				<select name="dept" ng-model="subjectForm.dept">
+               					<option value="CSE">CSE</option>
+               					<option value="IT">IT</option>
+               					<option value="ECE">ECE</option>
+               					<option value="EE">EE</option>
+               				</select>
+               			</td>
+               			<td><input type="text" name="lab" ng-model="subjectForm.lab"  /></td>
+               			<td><input type="text" name="nTeachers" ng-model="subjectForm.n_teachers"  /></td>
+               			<td><select id="selectTeachers" name="selectTeachers">
+               				<option onclick="addTeacherToList()" ng-repeat="teacher in teachers" value="{{teacher.id}}">{{teacher.id}}</option>
+               			</select>
+               			<td><input type="text" id="teachersList" name="teachersList" ng-model="subjectForm.teachersList" readonly/></td>
+               			<td><button onclick="clearTeacherList()" >Clear</button></td>
+               			<td><button ng-click="clear()">Clear</button></td>
+            		</tr>
+         		</table>
+      	</form>
+      	<div id="SubjectButtons">
+            		<input type="submit" ng-click="submitSubject()" value="Submit" class="blue-button" />
+        </div>
+      <br/>
+      <table border="1">
+         <tr>
+            <th>Sub Id</th>
+            <th>Department</th>
+            <th>Duration</th>
+            <th>Total hours</th>
+            <th>Practical?</th>
+            <th>Lab</th>
+            <th>No. of Teachers</th>
+            <th>Teachers List</th>
+            <th></th>
+            <th></th>
+         </tr>
+         <!-- $scope.employees -->
+         <tr ng-repeat="subject in subjects">
+            <td> {{ subject.id }}</td>
+            <td >{{ subject.dept }}</td>
+            <td> {{ subject.length }}</td>
+            <td >{{ subject.hours }}</td>
+            <td >{{ subject.practical }}</td>
+            <td >{{ subject.lab }}</td>
+            <td >{{ subject.n_teachers }}</td>
+            <td>{{ subject.teachersList }}</td>
+            <td>
+            <a ng-click="editSubject(subject)" class="edit-button">Edit</a>
+            </td>
+            <td>
+            <a ng-click="deleteSubject(subject)" class="delete-button">Delete</a>
+            </td>
+         </tr>
+      </table>
+      </div>
+	</div>
+	<div id="t3" class="tabcontent">
+  		<h3>Enter teacher details below</h3>
+  		<div id="subjectEntry">
+      		<form>
+         		<table border="1">
+            		<tr>
+               			<th>Teacher Id</th>
+               			<th>Clear input</th>
+            		</tr>
+            		<tr>
+               			<td><input type="text" ng-model="teacherForm.id" required/></td>
+               			<td><button class="create-button" ng-click="clear()" >Clear</button></td>
+            		</tr>
+         		</table>
+         		<div id="SubjectButtons">
+            		<input type="submit" ng-click="submitTeacher()" value="Submit" class="blue-button" />
+            	</div>
+      	</form>
+      <br/>
+      <table border="1">
+         <tr>
+            <th>Teacher Id</th>
+			<th></th>
+            <th></th>
+            <th></th>
+         </tr>
+         <!-- $scope.employees -->
+         <tr ng-repeat="teacher in teachers">
+            <td> {{ teacher.id }}</td>
+            <td>
+            <a ng-click="editTeacher(teacher)" class="edit-button">Edit</a>
+            </td>
+            <td>
+            <a ng-click="deleteTeacher(teacher)" class="delete-button">Delete</a>
+            </td>
+         </tr>
+      </table>
+      </div>
+	</div>
+	</div>
+    <footer class="footer">
+      <p>By Mainak Bose, Sibasis Bhattacharya and Aparajita Das </p>
+    </footer>
+    <script src="js/script.js"></script>
+  </body>
+</html>

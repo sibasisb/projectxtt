@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: projectx
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: sibas
+Implementation-Vendor-Id: com.stcet
+Build-Jdk: 1.8.0_221
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/projectx
+Created-By: Maven Integration for Eclipse
+

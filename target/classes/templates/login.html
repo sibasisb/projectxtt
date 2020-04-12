@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>Time Table Manager | Login</title>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+	<header>
+      <div class="container">
+        <div id="branding">
+          <h1><span class="highlight">St. Thomas' College of Engineering &amp; Technology</span></h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <section class="loginbox">
+      <div class="container">
+        <img src="./img/logo.png" id="logo">
+        <h1>Login Here</h1>
+        <form th:action="@{/login}" method="post">
+            <p>Username</p>
+            <input type="text" name="username" placeholder="Enter Username">
+            <p>Password</p>
+            <input type="password" name="password" placeholder="Enter Password">
+            <input type="submit" value="Login">
+        </form>
+      </div>
+    </section>
+    <div class="container">
+    	<div class="logmsg" id="err" th:if="${param.error}">Invalid username or password.</div>
+    	<div class="logmsg" id="suc" th:if="${param.logout}">You have been logged out.</div>
+    </div>
+    <footer class="footer" id="f">
+      <p>By Mainak Bose, Sibasis Bhattacharya and Aparajita Das  </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Time Table Manager | Welcome</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div id="branding">
+          <h1><span class="highlight">St. Thomas' College of Engineering &amp; Technology</span></h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a th:href="@{/admin}">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section id="showcase">
+      <div class="container">
+        <h1>Welcome to Time Table Manager</h1>
+        <p>Select the year to download their time table</p>
+      </div>
+    </section>
+
+    <section id="selec">
+      <div class="container">
+        <form name="myForm">
+          First: <input type="radio" name="sel" value="first" checked>
+          Second: <input type="radio" name="sel" value="second">
+          Third: <input type="radio" name="sel" value="third">
+          Fourth: <input type="radio" name="sel" value="fourth"><br>
+          <a id="myAnchor" href="/subjects.xlsxfirst" download>Download</a>
+        </form>
+      </div>
+    </section>
+    <footer class="footer" id="f">
+      <p>By Mainak Bose, Sibasis Bhattacharjee and Aparajita Das </p>
+    </footer>
+    <script type="text/javascript">
+    	
+    	var rad = document.myForm.sel;
+    	for (var i = 0; i < rad.length; i++) {
+    	    rad[i].addEventListener('change', function() {
+    	    	var checkRadio=document.querySelector('input[name="sel"]:checked');
+    	    	var str="/subjects.xlsx" + checkRadio.value;
+    	    	var link=document.getElementById("myAnchor");
+    	    	link.setAttribute("href",str);
+    	        console.log(this.value)
+    	    });
+    	}	
+    	
+    </script>
+  </body>
+</html>
