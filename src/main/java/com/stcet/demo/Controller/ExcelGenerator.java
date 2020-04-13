@@ -43,6 +43,9 @@ public class ExcelGenerator {
 	static HashMap<String,boolean[][]> available_lab_final;
 	ArrayList<ArrayList<Subject>> subject_repo;
 	ArrayList<Teacher> teacher_repo;
+	ArrayList<ArrayList<Subject>> subjectsFromDb;
+	ArrayList<Teacher> teachersFromDb;
+	ArrayList<Subject> subjectsList;
 	HashMap<String,ArrayList<String>> teaches;
 	HashMap<String,Subject> id_subjectMap;
 	HashMap<String,Teacher> id_teacherMap;
@@ -55,14 +58,70 @@ public class ExcelGenerator {
 	HashMap<String,ArrayList<SubjectTeacherCombo>> sub_TeacherComboMap;
 	HashMap<String,boolean[][]> available_teacher;
 	HashMap<String,boolean[][]> available_lab;
+	
+	public void populateFromDb() {
+		subjectsFromDb=new ArrayList<ArrayList<Subject>>();
+		for(int k=0;k<16;k++) {
+			subjectsFromDb.add(new ArrayList<Subject>());
+		}
+		String dname="CSE";
+		int i=0,j=2;
+		for(i=0;i<=15;i=i+4){
+			String sem="^[A-Z]*" + j + "[0-9]{2}";
+			for(Subject s: subjectsDAO.getSubjectsById(dname,sem)){
+				subjectsFromDb.get(i).add(s);
+			}
+			j=j+2;
+		}
+		dname="IT";
+		j=2;
+		for(i=1;i<=15;i=i+4){
+			String sem="^[A-Z]*" + String.valueOf(j) + "[0-9]{2}";
+			for(Subject s:subjectsDAO.getSubjectsById(dname,sem)){
+				subjectsFromDb.get(i).add(s);
+			}
+			j=j+2;
+		}
+
+		dname="ECE";
+		j=2;
+		for(i=2;i<=15;i=i+4){
+			String sem="^[A-Z]*" + String.valueOf(j) + "[0-9]{2}";
+			for(Subject s:subjectsDAO.getSubjectsById(dname,sem)){
+				subjectsFromDb.get(i).add(s);
+			}
+			j=j+2;
+		}
+
+		dname="EE";
+		j=2;
+		for(i=3;i<=15;i=i+4){
+			String sem="^[A-Z]*" + String.valueOf(j) + "[0-9]{2}";
+			for(Subject s:subjectsDAO.getSubjectsById(dname,sem)){
+				subjectsFromDb.get(i).add(s);
+			}
+			j=j+2;
+		}
+		teachersFromDb=new ArrayList<Teacher>();
+		for(Teacher tr:teachersDAO.getAllTeachers()) {
+			teachersFromDb.add(tr);
+		}
+		subjectsList=new ArrayList<Subject>();
+		for(Subject s:subjectsDAO.getAllSubjects()) {
+			subjectsList.add(s);
+		}
+		
+	}
+	
  	public void initialize(){
  		tutorial=new ArrayList<>();
  		h2=new ArrayList<>();
  		h3=new ArrayList<>();
  		h4=new ArrayList<>();
 		subject_repo=new ArrayList<ArrayList<Subject>>();
-		for(int i=0;i<16;i++)
+		for(int i=0;i<16;i++) 
 			subject_repo.add(new ArrayList<Subject>());
+		
 		this.defaultPopulateSubjects();
 		available_lab=new HashMap<>();
 		available_lab_final=new HashMap<>();
@@ -260,47 +319,16 @@ public class ExcelGenerator {
 		subject_repo.get(15).add(new Subject("EE802A","EE",1,3,"false","",1));
 		subject_repo.get(15).add(new Subject("EE891","EE",3,6,"false","EE1",2));
 		subject_repo.get(15).add(new Subject("EE894","EE",3,12,"false","EE2",1));*/
-		String dname="CSE";
-		int i=0,j=2;
-		for(i=0;i<=15;i=i+4){
-			String sem="^[A-Z]*" + j + "[0-9]{2}";
-			for(Subject s: subjectsDAO.getSubjectsById(dname,sem)){
+		
+		
+		for(int i=0;i<16;i++) {
+			for(Subject s:subjectsFromDb.get(i)) {
 				subject_repo.get(i).add(s);
 			}
-			j=j+2;
-		}
-		dname="IT";
-		j=2;
-		for(i=1;i<=15;i=i+4){
-			String sem="^[A-Z]*" + String.valueOf(j) + "[0-9]{2}";
-			for(Subject s:subjectsDAO.getSubjectsById(dname,sem)){
-				subject_repo.get(i).add(s);
-			}
-			j=j+2;
-		}
-
-		dname="ECE";
-		j=2;
-		for(i=2;i<=15;i=i+4){
-			String sem="^[A-Z]*" + String.valueOf(j) + "[0-9]{2}";
-			for(Subject s:subjectsDAO.getSubjectsById(dname,sem)){
-				subject_repo.get(i).add(s);
-			}
-			j=j+2;
-		}
-
-		dname="EE";
-		j=2;
-		for(i=3;i<=15;i=i+4){
-			String sem="^[A-Z]*" + String.valueOf(j) + "[0-9]{2}";
-			for(Subject s:subjectsDAO.getSubjectsById(dname,sem)){
-				subject_repo.get(i).add(s);
-			}
-			j=j+2;
 		}
 		
 		//populate h2,h3,h4
-		for(i=0;i<=3;i=i+1){
+		for(int i=0;i<=3;i=i+1){
 			for(Subject su:subject_repo.get(i)){
 				if(su.getPractical().equalsIgnoreCase("true") && su.getLength()==2) {
 					h2.add(su);
@@ -315,7 +343,7 @@ public class ExcelGenerator {
 		}
 		
 		//populate tutorial
-		for(i=0;i<=3;i++){
+		for(int i=0;i<=3;i++){
 			for(Subject su:subject_repo.get(i)){
 				String scode=su.getId();
 				String tut=scode.substring(scode.length()-3);
@@ -466,10 +494,12 @@ public class ExcelGenerator {
 		teacher_repo.add(new Teacher("SMo"));
 		teacher_repo.add(new Teacher("KR"));
 		teacher_repo.add(new Teacher("MB"));*/
-		for(Teacher tr:teachersDAO.getAllTeachers()) {
-			teacher_repo.add(tr);
-		}
 		id_teacherMap=new HashMap<>();
+		
+		for(Teacher s:teachersFromDb) {
+			teacher_repo.add(s);
+		}
+		
 		for(Teacher i:teacher_repo)
 			id_teacherMap.put(i.id,i);
 	}
@@ -986,7 +1016,7 @@ public class ExcelGenerator {
 		teaches.put("EE894 EE",new ArrayList<>(temp));
 		temp.clear();*/
 		
-		for(Subject su:subjectsDAO.getAllSubjects()) {
+		for(Subject su:subjectsList) {
 			String k=su.getId() + " " + su.getDept();
 			String arr[]=su.getTeachersList().split(",");
 			ArrayList<String> v=new ArrayList<>(Arrays.asList(arr));
@@ -1848,7 +1878,7 @@ public class ExcelGenerator {
 		//Scanner sc=new Scanner(System.in);
 		int k=1;
 		//System.out.println(d.sub_TeacherComboMap);
-		
+		d.populateFromDb();
 		d.initialize();
 		d.generateSubjectTeacherCombo();
 		
