@@ -21,9 +21,8 @@ public class SubjectsDAO {
 	private final String SQL_UPDATE_SUBJECT="update subjects set subject_id=?,length=?,isPractical=?,subj_load=?,nteachers=?,dept=?,teachersList=?,class_allocated=? where subject_id=? and dept=?";
 	private final String SQL_GET_ALL="select subject_id,length,isPractical,subj_load,nteachers,dept,teachersList,class_allocated from subjects";
 	private final String SQL_CREATE_SUBJECT="insert into subjects(subject_id,length,isPractical,subj_load,nteachers,dept,teachersList,class_allocated) values(?,?,?,?,?,?,?,?)";
-	private final String SQL_FIND_SUBJECTSBYID="select subject_id,length,isPractical,subj_load,nteachers,dept,teachersList,class_allocated from subjects where dept like ? and subject_id REGEXP ?";
+	private final String SQL_FIND_SUBJECTSBYID="select subject_id,length,isPractical,subj_load,nteachers,dept,teachersList,class_allocated from subjects where dept like ? and subject_id ~* ?";
 	private JdbcTemplate jdbcTemplateSub;
-	
 	@Autowired
 	public SubjectsDAO(JdbcTemplate j) {
 		jdbcTemplateSub=j;
