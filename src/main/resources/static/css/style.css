@@ -275,14 +275,14 @@ footer{
 }
 .logmsg{
 	text-align:center;
-	padding-top:35px;
+	padding-top:10px;
 	font-size:20px;
 }
 #err{
 	color:#ff2b2b;
 }
 #suc{
-	color:#000;
+	color:#000000;
 }
 header li input[type=submit]{
 	background-color: Transparent;
