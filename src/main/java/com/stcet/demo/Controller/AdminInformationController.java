@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.stcet.model.Subject;
 import com.stcet.model.Teacher;
 import com.stcet.spring.dao.SubjectsDAO;
@@ -220,11 +222,13 @@ public class AdminInformationController {
     }
 	
 	//Link for generating sheets
-    @GetMapping(value = "/generate")
-    public String generateSheets()throws Exception {
+    @RequestMapping(value = "/generate")
+    public ModelAndView generateSheets()throws Exception {
         gen.startGeneration();
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("generate");
         // return IOUtils.toByteArray(in);
-	return "generate";
+        return modelAndView;
     }
 	
     
