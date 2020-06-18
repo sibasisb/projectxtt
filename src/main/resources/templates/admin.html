@@ -29,12 +29,14 @@
       </div>
     </section>
     <div class="tab">
-    	<button class="tablinks" onclick="openPanel(event,'t1')" id="default">Properties</button>
+    	<button class="tablinks" onclick="openPanel(event,'t1')" id="default">Generation</button>
   		<button class="tablinks" onclick="openPanel(event,'t3')">Teachers</button>
   		<button class="tablinks" onclick="openPanel(event,'t2')">Subjects</button>
     </div>
     <div id="t1" class="tabcontent">
-  		<br><br><br>
+  		<br>
+	    	<p>Click the button below to generate the time table<p>
+	    	<br>
     	<input type="submit" value="Generate" onClick="location.href='/generate'" class="blue-button" />
 	</div>
 	<div ng-app="SubjectManagement" ng-controller="SubjectController">
