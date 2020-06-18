@@ -221,10 +221,10 @@ public class AdminInformationController {
 	
 	//Link for generating sheets
     @GetMapping(value = "/generate")
-    public void generateSheets()throws Exception {
+    public String generateSheets()throws Exception {
         gen.startGeneration();
         // return IOUtils.toByteArray(in);
-    	
+	return "generate";
     }
 	
     
