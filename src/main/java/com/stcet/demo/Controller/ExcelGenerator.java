@@ -3,6 +3,9 @@ package com.stcet.demo.Controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +17,9 @@ import java.util.Set;
 import org.apache.catalina.Context;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1724,11 +1730,27 @@ public class ExcelGenerator {
 		return true;
 	}
 
-	public ByteArrayInputStream showTable(int year)throws IOException{
-		ByteArrayOutputStream out=new ByteArrayOutputStream();
-		XSSFWorkbook workbook = new XSSFWorkbook(); 
+	public void showTable(int year)throws Exception{
+		String excelFilePath="";
+		if(year==1) {
+			excelFilePath = "src/main/resources/public/FirstYear.xlsx";
+		}
+		else if(year==2) {
+			excelFilePath = "src/main/resources/public/SecondYear.xlsx";
+		}
+		else if(year==3) {
+			excelFilePath = "src/main/resources/public/ThirdYear.xlsx";
+		}
+		else {
+			excelFilePath = "src/main/resources/public/FourthYear.xlsx";
+		}
+		//ByteArrayOutputStream out=new ByteArrayOutputStream();
+		
+		FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
+		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+		workbook.removeSheetAt(0);
         //Create a blank sheet
-        XSSFSheet sheet = workbook.createSheet("Time Table");
+        Sheet sheet = workbook.createSheet("Time Table");
         
         int rownum=0;    
         int cellnum = 0;
@@ -1820,13 +1842,13 @@ public class ExcelGenerator {
 					String q="";
 					if(week[i][j][k][0]==null && week[i][j][k][1]==null){
 						cell=row.createCell(cellnum++);
-						cell.setCellValue("     Free Period!     ");
+						cell.setCellValue("Free Period!");
 						continue;	
 					}
 					
 					if((week[i][j][k][0]!=null && (week[i][j][k][0].getSubject()==null || week[i][j][k][0].getSubject().equals(""))) && (week[i][j][k][1]!=null && (week[i][j][k][1].getSubject()==null || week[i][j][k][1].getSubject().equals("")))){
 						cell=row.createCell(cellnum++);
-						cell.setCellValue("     Free Period!     ");
+						cell.setCellValue("Free Period!");
 						continue;	
 					}
 					
@@ -1868,13 +1890,15 @@ public class ExcelGenerator {
 				
 			}
 		}
-		workbook.write(out);
+		
+		FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+        workbook.write(outputStream);
         workbook.close();
-        return new ByteArrayInputStream(out.toByteArray());
+        outputStream.close();
 	}
 	
 
-	public ByteArrayInputStream startGeneration(int year){
+	public void startGeneration()throws Exception{
 		//Scanner sc=new Scanner(System.in);
 		int k=1;
 		//System.out.println(d.sub_TeacherComboMap);
@@ -1895,15 +1919,18 @@ public class ExcelGenerator {
 		}
 		
 		System.out.println("Completed in "+k+" iterations");
-		ByteArrayInputStream bais=null;
+		//ByteArrayInputStream bais=null;
 		try {
 			d.checkAllocations();
-			bais=d.showTable(year);
+			d.showTable(1);
+			d.showTable(2);
+			d.showTable(3);
+			d.showTable(4);
 			d.showTeacherRoutine("DC");
 		}
 		catch(IOException e) {}
 		//d.showTeacherHours();
-		return bais;
+		
 	}
 	
 

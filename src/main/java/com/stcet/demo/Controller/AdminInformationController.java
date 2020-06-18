@@ -5,6 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ import com.stcet.model.Teacher;
 import com.stcet.spring.dao.SubjectsDAO;
 import com.stcet.spring.dao.TeachersDAO;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -217,8 +219,71 @@ public class AdminInformationController {
         return subjectForm;
     }
 	
+	//Link for generating sheets
+    @GetMapping(value = "/generate")
+    public void generateSheets()throws Exception {
+        gen.startGeneration();
+        // return IOUtils.toByteArray(in);
+    	
+    }
+	
+    
+    @GetMapping(value="/subjectsfirst",
+    produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public FileSystemResource downloadFirst() throws IOException{
+
+    		try{
+    			String path = "src/main/resources/public/FirstYear.xlsx"; //path of your file
+    		    return new FileSystemResource(new File(path));
+    		}
+    		catch(Exception e){System.out.println("error in file_download "+e); 
+    		return null;
+    		}
+    }
+    
+    @GetMapping(value="/subjectssecond",
+    produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public FileSystemResource downloadSecond() throws IOException{
+    	try{
+    		String path = "src/main/resources/public/SecondYear.xlsx"; //path of your file
+    	    return new FileSystemResource(new File(path));
+    	}
+    	catch(Exception e){System.out.println("error in file_download "+e); 
+      		return null;
+    	}
+    }
+    
+    @GetMapping(value="/subjectsthird",
+    produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public FileSystemResource downloadThird() throws IOException{
+    	try{
+    		String path = "src/main/resources/public/ThirdYear.xlsx"; //path of your file
+    	    return new FileSystemResource(new File(path));
+    	}
+    	catch(Exception e){System.out.println("error in file_download "+e); 
+    		return null;
+    	}
+    }
+    
+
+    @GetMapping(value="/subjectsfourth",
+    produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public FileSystemResource downloadFourth() throws IOException{
+    	try{
+    		String path = "src/main/resources/public/FourthYear.xlsx"; //path of your file
+    	    return new FileSystemResource(new File(path));
+    	}
+    	catch(Exception e){System.out.println("error in file_download "+e); 
+    		return null;
+    	}
+    }
+    
     //<button onclick="location.href='/subjects.xlsx'" class="button_1">Download</button>
-    @GetMapping(value = "/subjects.xlsxfirst")
+    /*@GetMapping(value = "/subjects.xlsxfirst")
     public ResponseEntity<InputStreamResource> downloadSubjects1()throws IOException {
     	int year=1;
         ByteArrayInputStream in = gen.startGeneration(year);
@@ -278,5 +343,5 @@ public class AdminInformationController {
                       .headers(headers)
                       .body(new InputStreamResource(in));
     	
-    }
+    }*/
 }

@@ -36,7 +36,7 @@
           Second: <input type="radio" name="sel" value="second">
           Third: <input type="radio" name="sel" value="third">
           Fourth: <input type="radio" name="sel" value="fourth"><br>
-          <a id="myAnchor" href="/subjects.xlsxfirst" style="color:#33ff00" download>Download</a>
+          <a id="myAnchor" href="/subjectsfirst" style="color:#33ff00" download>Download</a>
         </form>
       </div>
     </section>
@@ -49,7 +49,7 @@
     	for (var i = 0; i < rad.length; i++) {
     	    rad[i].addEventListener('change', function() {
     	    	var checkRadio=document.querySelector('input[name="sel"]:checked');
-    	    	var str="/subjects.xlsx" + checkRadio.value;
+    	    	var str="/subjects" + checkRadio.value;
     	    	var link=document.getElementById("myAnchor");
     	    	link.setAttribute("href",str);
     	        console.log(this.value)

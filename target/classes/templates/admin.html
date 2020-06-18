@@ -34,26 +34,8 @@
   		<button class="tablinks" onclick="openPanel(event,'t2')">Subjects</button>
     </div>
     <div id="t1" class="tabcontent">
-  		<form method = "POST" action = "/addProperties">
-  			<div class="sem">
-  				<h5>Select semester:</h5>
-  				<input type="radio" value="odd">Odd
-  				<input type="radio" value="even">Even
-  			</div>
-    		<h5>Slots per day:</h5>
-    		<input type="text"><br>
-    		<div class="week">
-    			<h4>Select active days:</h4>
-    			Monday<input type="checkbox">
-   				Tuesday<input type="checkbox">
-   				Wednesday<input type="checkbox">
-   				Thursday<input type="checkbox">
-   				Friday<input type="checkbox">
-    			Saturday<input type="checkbox">
-    			Sunday<input type="checkbox">
-    		</div><br><br>
-    		<button type="submit" value="Submit">Confirm</button>
-  		</form>
+  		<br><br><br>
+    	<input type="submit" value="Generate" onClick="location.href='/generate'" class="blue-button" />
 	</div>
 	<div ng-app="SubjectManagement" ng-controller="SubjectController">
 	<div id="t2" class="tabcontent">
