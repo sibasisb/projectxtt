@@ -1841,13 +1841,11 @@ public class ExcelGenerator {
 					String p="";
 					String q="";
 					if(week[i][j][k][0]==null && week[i][j][k][1]==null){
-						cell=row.createCell(cellnum++);
 						cell.setCellValue("Free Period!");
 						continue;	
 					}
 					
 					if((week[i][j][k][0]!=null && (week[i][j][k][0].getSubject()==null || week[i][j][k][0].getSubject().equals(""))) && (week[i][j][k][1]!=null && (week[i][j][k][1].getSubject()==null || week[i][j][k][1].getSubject().equals("")))){
-						cell=row.createCell(cellnum++);
 						cell.setCellValue("Free Period!");
 						continue;	
 					}
@@ -1864,7 +1862,7 @@ public class ExcelGenerator {
 							q="";
 						System.out.println("q="+q);
 					}
-					cell.setCellValue(p+ "   /   " +q);
+					cell.setCellValue(p+ "  /  " +q);
 					Subject subSpan=null;
 					String sub=p;
 					if(!p.equals("")) {
@@ -1877,7 +1875,7 @@ public class ExcelGenerator {
 					
 					for(int idx=1;idx<subSpan.getLength();idx++){
 						cell=row.createCell(cellnum++);
-						cell.setCellValue(p+ "   /   " +q);
+						cell.setCellValue(p+ "  /  " +q);
 					}
 					for(SubjectTeacherCombo x: week[i][j][k]){						
 						System.out.print(" "+x);
