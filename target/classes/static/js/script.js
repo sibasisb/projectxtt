@@ -14,14 +14,14 @@ function openPanel(evt, x) {
 }
 
 function clearTeacherList(){
-	var t=document.getElementById("teachersList").value.split(" ");
+	var t=document.getElementById("teachersList").value.split(",");
 	if(t.length==1){
 		document.getElementById("teachersList").value="";
 	}
 	else{
 		document.getElementById("teachersList").value=t[0];
 		for(i=1;i<t.length-1;i++)
-			document.getElementById("teachersList").value+=(" "+t[i]);
+			document.getElementById("teachersList").value+=(","+t[i]);
 	}
 }
 function addTeacherToList(){
@@ -30,7 +30,7 @@ function addTeacherToList(){
 	if(t.value=="")
 		t.value=e.options[e.selectedIndex].value;
 	else
-		t.value+=" "+e.options[e.selectedIndex].value;
+		t.value+=","+e.options[e.selectedIndex].value;
 }
 var app = angular.module("SubjectManagement", []);
 
