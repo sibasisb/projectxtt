@@ -1862,7 +1862,13 @@ public class ExcelGenerator {
 							q="";
 						System.out.println("q="+q);
 					}
-					cell.setCellValue(p+ "  /  " +q);
+					String pteachers="",qteachers="";
+					if(!p.equals(""))
+						pteachers=week[i][j][k][0].getTeachersString();
+					if(!q.equals(""))
+						qteachers=week[i][j][k][1].getTeachersString();
+					
+					cell.setCellValue(p+ pteachers + "  /  " +q + qteachers);
 					Subject subSpan=null;
 					String sub=p;
 					if(!p.equals("")) {
@@ -1875,7 +1881,7 @@ public class ExcelGenerator {
 					
 					for(int idx=1;idx<subSpan.getLength();idx++){
 						cell=row.createCell(cellnum++);
-						cell.setCellValue(p+ "  /  " +q);
+						cell.setCellValue(p + pteachers + "  /  " +q + qteachers);
 					}
 					for(SubjectTeacherCombo x: week[i][j][k]){						
 						System.out.print(" "+x);

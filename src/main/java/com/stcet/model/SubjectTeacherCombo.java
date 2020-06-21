@@ -12,6 +12,11 @@ public class SubjectTeacherCombo{
 	public ArrayList<String> getTeachers() {
 		return teachers;
 	}
+	
+	public String getTeachersString() {
+		return teachers.toString();
+	}
+	
 	public SubjectTeacherCombo(SubjectTeacherCombo a){
 		if(a.subject!=null)
 			subject=new String(a.subject);
